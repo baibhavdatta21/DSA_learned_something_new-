@@ -1,0 +1,28 @@
+In this problem we have to use a map of stack!!!
+its a very different problem, but once you understand that you can use a map of stack its so easy
+problem link->https://leetcode.com/problems/maximum-frequency-stack/
+
+    map<int,int>mp_1;
+    map<int,stack<int>>mp_s;
+    int maxi=0;
+    void push(int val) 
+    {
+        mp_1[val]++;
+        maxi=max(maxi,mp_1[val]);
+        
+        mp_s[mp_1[val]].push(val);
+    }
+    
+    int pop() 
+    {
+        int cur=mp_s[maxi].top();
+        mp_s[maxi].pop();
+        mp_1[cur]--;
+        
+        if(mp_s[maxi].empty())
+        {
+            mp_s.erase(maxi);
+            maxi--;
+        } 
+        return cur;
+    }
