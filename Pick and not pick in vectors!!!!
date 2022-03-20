@@ -1,0 +1,45 @@
+Came across this problem in today's leetcode weekly question number 3, couldn't solve it back then, but now after upsolving it, I realised how beautiful the question is
+
+Its simple pick and not_pick question but here in we will have to produce the vector which will hold the max result, here we simply keep a dummm array and update it as 
+soon as we find a better array.
+
+pick and not_pick to find max, min, count seems nieve here's the real deal!!!!!!!.
+
+problem ref->https://leetcode.com/problems/maximum-points-in-an-archery-competition/
+
+
+
+vector<int>ans;
+    int target=0;
+    void solver(int i,vector<int>& alice,int num,int sum, vector<int>res)
+    {
+        if(i==-1 || num<=0)
+        {
+            if(sum>target)
+            {
+                target=sum;
+                if(num>0)
+                {
+                    res[0]+=num;
+                }
+                ans=res;
+            }
+            return;
+            
+        }
+        int req=alice[i]+1;
+        if(num>=req)
+        {
+            res[i]=req;
+            solver(i-1,alice,num-req,sum+i,res);
+            res[i]=0;
+        }
+        solver(i-1,alice,num,sum,res);
+        return;
+    }
+    vector<int> maximumBobPoints(int num, vector<int>& alice) 
+    {
+        vector<int>res(12,0);
+        solver(11,alice,num,0,res);
+        return ans;
+    }
