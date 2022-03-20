@@ -1,0 +1,65 @@
+taking a numerical input as a string then sometimes using it as a string and other times as a numerical value!! 
+
+Google kickstart 2022 round A, couldn't solve any but learned so so much!!
+problem link->https://codingcompetitions.withgoogle.com/kickstart/round/00000000008cb33e/00000000009e7997
+vid ref->https://www.youtube.com/watch?v=dP5bQeT4K1U&t=697s
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+
+void solve(int test)
+{
+	cout<<"Case #"<<test<<": ";
+	string n;
+    cin>>n;
+    int sum=0;
+    for(auto it:n)
+    {
+    	sum+=(it-'0');
+    }
+    int k=sum%9;
+    int d=9-k;
+    if(d==9)
+    	d=0;
+    if(d==0)
+    	cout<<n[0]<<"0"<<n.substr(1);
+    else
+    {
+    	int s=n.size();
+    	int k=s;
+    	for(int i=0;i<s;i++)
+    	{
+    		if(n[i]-'0'>d)
+			{
+				k=i;
+    			break;
+    		}	
+    	}
+    	for(int i=0;i<k;i++)
+    	{
+    		cout<<n[i];
+    	}
+    	cout<<d;
+
+    	for(int i=k;i<s;i++)
+    	{
+    		cout<<n[i];
+    	}
+    }
+
+   	cout<<endl;
+    
+}
+int main()
+{
+   
+    int t;
+    cin>>t;
+    for(int i=1;i<t+1;i++)
+    {
+    	solve(i);
+    }
+    
+    
+	return 0;
+}
