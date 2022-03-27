@@ -1,0 +1,48 @@
+It was the 3rd question in leetcode weekly 
+we are given an array and a length, we will have to retrurn a vector which will hold the numbers which are the smallest positive
+palindrome of the given length  and its order is the order given in the vector.
+if not possible we return -1.
+
+question ref->https://leetcode.com/problems/find-palindrome-with-fixed-length/
+article ref->https://www.geeksforgeeks.org/nth-palindrome-k-digits/
+
+string check(long long n,long long l)
+    {
+        long long k;
+        string str;
+        long long pal;
+        if(l%2==0)
+        k=l/2-1;
+        else
+        k=l/2;
+        
+        pal=pow(10,k); 
+        pal+=(n-1);   //generating the first half
+        
+        str=to_string(pal); //storing the first half in the form of a string
+        
+        if(l%2!=0)
+        pal/=10;
+        
+        while(pal>0)
+        {
+            str+=to_string(pal%10);
+            pal/=10;
+        }                         //storing the second half
+        cout<<str<<endl;
+        if(str.size()==l)
+        return str;
+        return "-1";             // if their size match we return the string else we return -1
+    }
+    vector<long long> kthPalindrome(vector<int>& q, int l)
+    {
+        vector<long long>ans;
+        int n=q.size();
+        long long temp;
+        for(int i=0;i<n;i++)
+        {
+            temp=stoll(check(q[i],l));  //changing the string back to long long
+            ans.push_back(temp);        //storing it
+        }
+        return ans;                     //Finally returning the answer
+    }
