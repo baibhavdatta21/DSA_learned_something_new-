@@ -1,0 +1,108 @@
+void merge(int l,int mid,int h,vector<int>& nums,vector<pair<int,int>>&v,vector<int> &ans)
+    {
+        vector<pair<int,int>>temp(h-l+1);
+        int k=0;
+        int i=l;
+        int j=mid+1;
+        int count=0;
+        while(i<=mid && j<=h)
+        {
+           
+            if(v[i].first>v[j].first)
+            {
+                
+                temp[k]=v[j];
+                j++;
+                count++;
+            }
+            else
+            {
+                ans[v[i].second]+=count;
+                temp[k]=v[i];  
+                i++;
+            }
+            k++;
+        }
+        while(i<=mid)
+        {
+            ans[v[i].second]+=count;
+            temp[k]=v[i];
+            i++;
+            k++;
+        }
+        while(j<=h)
+        {
+            temp[k]=v[j];
+            j++;
+            k++;
+        }
+        int n=temp.size();
+        for(int i=0;i<n;i++)
+        {
+            //cout<<"temp: "<<temp[i]<<endl;
+            v[l]=temp[i];
+            l++;
+        }
+    }
+    void mergesort(int l,int h,vector<int>& nums,vector<pair<int,int>>&v,vector<int> &ans)
+    {
+        if(h>l)
+        {
+            int mid=(h+l)/2;
+            mergesort(l,mid,nums,v,ans);
+            mergesort(mid+1,h,nums,v,ans);
+            merge(l,mid,h,nums,v,ans);
+        }
+    }
+    vector<int> countSmaller(vector<int>& nums)
+    {
+        
+        
+        int n=nums.size();
+        vector<int>ans(n);
+        vector<pair<int,int>>v;
+        //unordered_map<int,int>mp;
+        for(int i=0;i<n;i++)
+        {
+            v.push_back({nums[i],i});
+        }
+        mergesort(0,n-1,nums,v,ans);
+        return ans;
+    }*/
+    //TC->O(NlogN)
+    //Sc->O(N)
+    
+    vector<int> countSmaller(vector<int>& nums)
+    {
+        int n=nums.size();
+        vector<int>ans(n,0);
+        vector<int>check;
+        for(int i=n-1;i>=0;i--)
+        {
+            int index=bs(check,nums[i]);
+            ans[i]=index;
+            check.insert(check.begin()+index,nums[i]);
+        }
+        return ans;
+    }
+    int bs(vector<int>& nums,int t)
+    {
+        int l=0;
+        int h=nums.size()-1;
+        while(h>=l)
+        {
+            int mid=l+(h-l)/2;
+            if(nums[mid]<t)
+            {
+                l=mid+1;
+            }
+            else
+            {
+                h=mid-1;
+            }
+        }
+        //cout<<l<<endl;
+        return l;
+    }
+    //TC->Bs->o(N*N)
+    //Sc->O(N+N);
