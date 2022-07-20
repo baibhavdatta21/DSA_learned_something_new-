@@ -1,0 +1,180 @@
+TC->O(n*m*m)
+SC->O(n*m)
+
+//     int solver(int i,int prev,int n,vector<vector<int>>& p, vector<vector<int>>&dp)
+//     {
+//         if(i==p.size())
+//         return 0;
+        
+//         if(dp[i][prev]!=-1)
+//         return dp[i][prev];
+        
+//         int sum=0;
+//         int maxi=0;
+//         for(int index=0;index<n;index++)
+//         {
+//             if(i==0)
+//             sum=p[i][index]+solver(i+1,index,n,p,dp);
+//             else
+//             sum=p[i][index]-abs(prev-index)+solver(i+1,index,n,p,dp);
+//             maxi=max(maxi,sum);
+//         }
+//         return dp[i][prev]=maxi;
+//     }
+//     long long maxPoints(vector<vector<int>>& p) 
+//     {
+//         int n=p.size();
+//         int m=p[0].size();
+//         vector<vector<int>>dp(n,vector<int>(m,-1));
+//         return solver(0,0,m,p,dp);
+//     }
+//     long long maxPoints(vector<vector<int>>& p)
+//     {
+//         int n=p.size();
+//         int m=p[0].size();
+//         int prev=0;
+//         vector<vector<int>>dp(n,vector<int>(m,0));
+//         for(int i=0;i<n;i++)
+//         {
+//             for(int j=0;j<m;j++)
+//             {
+//                 int sum=0;
+//                 int maxi=0;
+//                 for(int prev=0;prev<m;prev++)
+//                 {
+                    
+//                     if(i==0)
+//                     sum=p[i][j];
+//                     else
+//                     sum=p[i][j]-abs(prev-j)+dp[i-1][prev];
+//                     maxi=max(maxi,sum);
+//                 }
+//                  dp[i][j]=maxi;
+                
+//             }
+//         }
+//         int maxi=0;
+//         for(int j=0;j<m;j++)
+//         {
+//             maxi=max(dp[n-1][j],maxi);
+//         }
+//         return maxi;
+        
+//     }
+    
+//     long long maxPoints(vector<vector<int>>& p)
+//     {
+//         long long n=p.size();
+//         long long m=p[0].size();
+//         long long prev=0;
+//         vector<vector<long long>>dp(n,vector<long long>(m,0));
+//         for(long long i=0;i<m;i++)
+//         dp[0][i]=p[0][i];
+        
+//         for(long long i=1;i<n;i++)
+//         {
+//             vector<long long>left(m);
+//             vector<long long>right(m);
+            
+//             left[0]=dp[i-1][0];
+//             for(long long j=1;j<m;j++)
+//             {
+//                 left[j]=max(left[j-1]-1,dp[i-1][j]);
+//             }
+//             right[m-1]=dp[i-1][m-1];
+//             for(long long j=m-2;j>=0;j--)
+//             {
+//                 right[j]=max(right[j+1]-1,dp[i-1][j]);
+//             }
+            
+//             for(long long j=0;j<m;j++)
+//             {
+//                 dp[i][j]=p[i][j]+max(right[j],left[j]);
+//             }
+//         }
+//         long long maxi=0;
+//         for(long long i=0;i<m;i++)
+//         {
+//             maxi=max(maxi,dp[n-1][i]);
+//         }
+//         return maxi;
+//     }
+    long long maxPoints(vector<vector<int>>& p)
+    {
+        long long n=p.size();
+        long long m=p[0].size();
+        //long long prev=0;
+        //vector<vector<long long>>dp(n,vector<long long>(m,0));
+        vector<long long >prev(m,0);
+        vector<long long>cur(m,0);
+        for(int i=0; i<m; ++i) prev[i] = p[0][i];
+        
+        for(long long i=1;i<n;i++)
+        {
+            
+            vector<long long>left(m,0);
+            vector<long long>right(m,0);
+            
+            left[0]=prev[0];
+            
+            for(long long j=1;j<m;j++)
+            {
+              
+               left[j]= (left[j-1]-1,prev[j]);
+            }
+            
+            right[m-1]=prev[m-1];
+            for(long long j=m-2;j>=0;j--)
+            {
+                right[j]=max(right[j+1]+1,prev[j]);
+            }
+            
+            for(long long j=0;j<m;j++)
+            {
+                cur[j]=p[i][j]+max(right[j],left[j]);
+            }
+            
+            prev=cur;
+        }
+        
+        long long maxi=0;
+        for(auto &i: prev) maxi = max(maxi, i);
+        
+        return maxi;
+    }
+    TC->O(N*M)
+    SC->O(N*M)
+//      long long maxPoints(vector<vector<int>>& P) {
+//       ll n = P.size(), m = P[0].size();
+
+//       vector<ll> prev(m); 
+//       for(int i=0; i<m; ++i) prev[i] = P[0][i];
+      
+//       for(int i = 1; i < n; ++i){
+//         vector<ll> curr(m, 0);
+//         auto right = curr, left = curr;
+        
+//         // traverse left to right
+//         left[0] = prev[0];
+//         for(int j=1; j<m; ++j) {
+//           left[j] = max(left[j-1]-1, prev[j]);
+//         }
+        
+//         // traverse right to left
+//         right[m-1] = prev[m-1];
+//         for(int j=m-2; j>=0; --j) {
+//           right[j] = max(right[j+1]-1, prev[j]);
+//         }
+        
+//         // update current with max from left, right + value
+//         for(int j=0; j<m; ++j){
+//           curr[j] = P[i][j] + max(left[j], right[j]);
+//         }
+        
+//         prev = curr;
+//       }
+      
+//       ll ans = prev[0];
+//       for(auto &i: prev) ans = max(ans, i);
+//       return ans;
+//     }
