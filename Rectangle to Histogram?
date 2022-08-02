@@ -1,0 +1,79 @@
+int hist(vector<int>&nums)
+    {
+        stack<int>st;
+        int n=nums.size();
+        int maxi=0;
+        //st.push(0);
+        int val=0;
+        for(int i=0;i<n;i++)
+        {
+           while(!st.empty() && nums[st.top()]>=nums[i])
+           {
+               int take=st.top();
+               st.pop();
+               
+               if(st.empty())
+               {
+                   val=(i)*nums[take];
+               }
+               else
+               {
+                   val=(i-st.top()-1)*nums[take];
+               }
+               maxi=max(maxi,val);
+                   
+           }
+            st.push(i);
+        }
+        
+        while(!st.empty())
+        {
+            int take=st.top();
+            st.pop();
+            if(st.empty())
+            {
+                val=n*nums[take];
+            }
+            else
+            {
+                val=(n-st.top()-1)*nums[take];
+            }
+             maxi=max(maxi,val);
+        }
+        return maxi;
+    }
+    int maximalRectangle(vector<vector<char>>& matrix) 
+    {
+        int n=matrix.size();
+        int m=matrix[0].size();
+        vector<vector<int>>take(n,vector<int>(m,0));
+        int steps=0;
+        int maxi=0;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                if(i==0)
+                take[i][j]=matrix[i][j]-'0';
+                else
+                {
+                    if(matrix[i][j]=='1')
+                    take[i][j]=take[i-1][j]+1;
+                    else
+                    take[i][j]=0;
+                    
+                }
+            }
+             steps=hist(take[i]);
+             maxi=max(maxi,steps);
+        }
+        // for(int i=0;i<n;i++)
+        // {
+        //     for(int j=0;j<m;j++)
+        //     {
+        //         cout<<take[i][j]<<" ";
+        //     }
+        //     cout<<endl;
+        // }
+        return maxi;
+    }
