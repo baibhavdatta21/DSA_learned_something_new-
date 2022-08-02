@@ -1,3 +1,6 @@
+Posted this question in leetcode discussion
+-Has a very different approach
+-Go through the whole question in and comments from the lin given below:
 https://leetcode.com/discuss/interview-question/2357394/infosys-oa-on-campus/1519551
 
 int solve(vector<int>&nums)
