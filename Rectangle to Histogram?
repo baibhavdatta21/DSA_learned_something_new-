@@ -1,3 +1,6 @@
+Tc->O(N*M + N*N) //N*M for iterating in the matrix //N is time complexity for the use of histogram function each time and N*N for using it N times.
+SC->O(N*N)+O(N) //N*N for the new matrix generated && O(N)*N for the generation of the stack.
+
 int hist(vector<int>&nums)
     {
         stack<int>st;
