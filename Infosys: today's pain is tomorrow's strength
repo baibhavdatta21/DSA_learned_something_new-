@@ -1,0 +1,55 @@
+https://leetcode.com/discuss/interview-question/2357394/infosys-oa-on-campus/1519551
+
+int solve(vector<int>&nums)
+{
+    int ans=0;
+    int a=0;
+    int b=0;
+    int bad=0;
+    stack<int>st;
+    st.push(0);
+    int n=nums.size();
+    
+    for(int i=1;i<n;i++)
+    {
+        while(!st.empty() && st.top()!=bad && nums[i]>=nums[st.top()])
+        {
+            st.pop();
+
+            int l=nums[i];
+            int r=nums[st.top()];
+            ans+=min(l,r);
+        }
+        if(st.top()==bad && nums[i]>nums[st.top()])
+        bad=i;
+
+        st.push(i);
+    }
+    while(!st.empty())
+    {
+        int num=nums[st.top()];
+        st.pop();
+
+        if(num>a)
+        {
+            b=a;
+            a=num;
+        }
+        else if(num>b)
+        {
+            b=num;
+        }
+        ans+=num;
+    }
+
+    return ans-b-a;
+}
+void solver()
+{
+    int n;
+    cin>>n;
+    vector<int>v(n);
+    for(int i=0;i<n;i++)
+    cin>>v[i];
+    cout<<solve(v)<<endl;
+}
