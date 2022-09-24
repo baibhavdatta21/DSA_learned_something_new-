@@ -1,0 +1,48 @@
+https://www.codingninjas.com/codestudio/problems/maximum-xor_973113?leftPanelTab=1
+
+class Node
+{
+    public:
+    Node* links[2];
+};
+void create_trie(vector<int> &nums1,Node* root)
+{
+    Node* dum=root;
+    int n=nums1.size();
+    for(int i=0;i<n;i++)
+    {
+        Node* dum2=dum;
+        for(int j=31;j>=0;j--)
+        {
+            if(dum2->links[(nums1[i]>>j)&1]==NULL)
+            dum2->links[(nums1[i]>>j)&1]=new Node();
+            dum2=dum2->links[(nums1[i]>>j)&1];
+        }
+    }
+}
+int check(int x,Node* root)
+{
+    Node* dum=root;
+    int maxi=0;
+    for(int i=31;i>=0;i--)
+    {
+        int want=1-((x>>i)&1);
+        if(dum->links[want]!=NULL)
+        {
+            maxi=maxi|1<<i;
+            dum=dum->links[want];
+        }
+        else
+            dum=dum->links[1-want];
+    }
+    return maxi;
+}
+int maxXOR(int n, int m, vector<int> &nums1, vector<int> &nums2) 
+{
+    Node* root=new Node();
+    create_trie(nums1,root);
+    int maxi=0;
+    for(int i=0;i<m;i++)
+    maxi=max(maxi,check(nums2[i],root));
+    return maxi;
+}
