@@ -1,0 +1,3 @@
+it's a C++17 (and later) paradigm, where you can have a read-only access to string and get a non-copying substr in O(1) time, among other things. Really useful in cases like this, when you repeatedly need to access portions of a string.
+
+example->https://leetcode.com/problems/maximum-deletions-on-a-string/discuss/2649090/C%2B%2B-Recursive-DP-or-Easy-to-Understand
